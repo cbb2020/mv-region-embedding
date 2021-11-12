@@ -27,7 +27,9 @@ def load_data():
     """ Return adjs. """
 
     data_path = "../data/"
+    # taxi trip
     adj = np.load(data_path+"mob-adj.npy")
+    # (1, 180, 180), 180 regoins
     _, n, _  = adj.shape
 
     adj = adj/np.mean(adj, axis=(1, 2))
