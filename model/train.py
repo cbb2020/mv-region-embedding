@@ -1,6 +1,7 @@
 from __future__ import division
 from __future__ import print_function
 
+import sys
 import numpy as np
 import tensorflow as tf
 
@@ -39,16 +40,16 @@ chk_adj = data["chk_adj"]
 chk_adj_sp = data["chk_adj_sp"]
 
 feature = data["feature"]
+# mob_adj.shape: (180, 180)
 time_step, item_num, _ = mob_adj.shape
-mob_shape = (time_step, item_num, item_num)
-adj_shape = (item_num, item_num)
-bias_mat_shape = (1, item_num, item_num)
+mob_shape = (time_step, item_num, item_num) # (1, 180, 180)
+adj_shape = (item_num, item_num)            # (180, 180)
+bias_mat_shape = (1, item_num, item_num)    # (1, 180, 180)
 
-mask_shape = (item_num, item_num, 2)
+mask_shape = (item_num, item_num, 2)        # (180, 180, 2)
 
 # Some preprocessing
 feature = preprocess_features(feature)
-
 data["s_bias"] = adj_to_bias(s_adj_sp, [item_num], 1)
 data["t_bias"] = adj_to_bias(t_adj_sp, [item_num], 1)
 data["poi_bias"] = adj_to_bias(poi_adj_sp, [item_num], 1)

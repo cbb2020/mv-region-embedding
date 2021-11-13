@@ -29,17 +29,21 @@ def load_data():
     data_path = "../data/"
     # taxi trip
     adj = np.load(data_path+"mob-adj.npy")
-    # (1, 180, 180), 180 regoins
+    # (1, 180, 180), 180 regions
     _, n, _  = adj.shape
 
     adj = adj/np.mean(adj, axis=(1, 2))
 
     k = 20
     s_adj = np.load(data_path+"s_adj.npy")
+    # shape: (180, 180)
     s_adj_sp = np.copy(adj[0])
 
+    # Set the smallest number of k in each column/row to 0
     for i in range(n):
+        # Set the smallest number of k in each column to 0
         s_adj_sp[np.argsort(s_adj_sp[:, i])[:-k], i] = 0
+        # Set the smallest number of k in each row to 0
         s_adj_sp[i, np.argsort(s_adj_sp[i, :])[:-k]] = 0
         # s_adj[i, np.argsort(s_adj[i, :])[:-k]] = 0
 
@@ -49,6 +53,9 @@ def load_data():
     for i in range(n):
         t_adj_sp[np.argsort(t_adj_sp[:, i])[:-k], i] = 0
         t_adj_sp[i, np.argsort(t_adj_sp[i, :])[:-k]] = 0
+
+    # print((t_adj_sp == s_adj_sp).all())
+    # t_adj_sp is same as s_adj_sp
 
     k = 15
     poi_adj = np.load(data_path+"poi_simi.npy")
@@ -67,9 +74,10 @@ def load_data():
 
     feature = np.random.uniform(-1, 1, size=(180, 250))
     feature = feature[np.newaxis]
+    # print(feature)
+    # print(feature.shape)
 
     out = {
-
         "mob_adj": adj,
         "s_adj_sp": s_adj_sp,
         "t_adj_sp": t_adj_sp,
