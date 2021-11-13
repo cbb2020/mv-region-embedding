@@ -52,6 +52,8 @@ def compute_metrics(y_pred, y_test):
     return mae, np.sqrt(mse), r2
 
 def predict_crime(emb):
+    # print('emb: \n', emb)
+    # print('crime: \n', crime)
     y_pred, y_test = kf_predict(emb, crime)
     mae, rmse, r2 = compute_metrics(y_pred, y_test)
 

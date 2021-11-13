@@ -151,7 +151,6 @@ class MVURE(Model):
         self.poi_out = beta*poi_out + (1-beta)*self.out
         self.chk_out = beta*chk_out + (1-beta)*self.out
 
-
     def mv_attn(self, views):
         input_dim = views[0].shape.as_list()[-1]
         with tf.name_scope("MV-ATTN"):
